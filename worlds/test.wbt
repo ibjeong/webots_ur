@@ -1,0 +1,22 @@
+#VRML_SIM R2019a utf8
+WorldInfo {
+}
+Viewpoint {
+  orientation -0.16871731871654694 -0.9625686053895409 -0.2121229508646659 1.888300571694746
+  position -2.723260358653187 1.91283337472329 -0.47281856356402757
+}
+Background {
+  cubemap Cubemap {
+    textureBaseName "noon_sunny_empty"
+  }
+}
+DirectionalLight {
+  direction 0 -1 0
+}
+DirectionalLight {
+  direction 0 -1 0
+}
+RectangleArena {
+}
+UR10 {
+}
