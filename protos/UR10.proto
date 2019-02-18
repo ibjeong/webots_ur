@@ -1,0 +1,186 @@
+#VRML_SIM R2019a utf8
+
+PROTO UR10 [
+]
+{
+   %{
+      -- TODO: apply urdf inertial
+      -- <xacro:macro name="cylinder_inertial" params="radius length mass *origin">
+      --   <inertial>
+      --     <mass value="${mass}" />
+      --     <xacro:insert_block name="origin" />
+      --     <inertia ixx="${0.0833333 * mass * (3 * radius * radius + length * length)}" ixy="0.0" ixz="0.0"
+      --       iyy="${0.0833333 * mass * (3 * radius * radius + length * length)}" iyz="0.0"
+      --       izz="${0.5 * mass * radius * radius}" />
+      --   </inertial>
+      -- </xacro:macro>
+
+      local base_mass      = 4
+      local shoulder_mass  = 7.778
+      local upper_arm_mass = 12.93
+      local forearm_mass   = 3.87
+      local wrist_1_mass   = 1.96
+      local wrist_2_mass   = 1.96
+      local wrist_3_mass   = 0.202
+
+      local d1 = 0.1273
+      local a2 = -0.612
+      local a3 = -0.5723
+      local d4 = 0.163941
+      local d5 = 0.1157
+      local d6 = 0.0922
+
+      local shoulder_offset = 0.220941
+      local elbow_offset    = -0.1719
+
+      local shoulder_height  = d1
+      local upper_arm_length = -a2
+      local forearm_length   = -a3
+      local wrist_1_length   = d4 - elbow_offset - shoulder_offset
+      local wrist_2_length   = d5
+      local wrist_3_length   = d6
+   }%
+   Solid {
+      children [
+         Transform {
+            translation 0 %{=shoulder_height}% 0
+            children [
+               HingeJoint {
+                  jointParameters HingeJointParameters {
+                     axis   0 1 0
+                  }
+                  device [
+                  ]
+                  endPoint Solid {
+                     children [
+                        Transform {
+                           translation 0 0 %{=shoulder_offset}%
+                           children [
+                              HingeJoint {
+                                 jointParameters HingeJointParameters {
+                                    axis   0 0 1
+                                 }
+                                 device [
+                                 ]
+                                 endPoint Solid {
+                                    children [
+                                       Transform {
+                                          translation 0 %{=upper_arm_length}% %{=elbow_offset}%
+                                          children [
+                                             HingeJoint {
+                                                jointParameters HingeJointParameters {
+                                                   axis   0 0 1
+                                                }
+                                                device [
+                                                ]
+                                                endPoint Solid {
+                                                   children [
+                                                      Transform {
+                                                         translation 0 %{=forearm_length}% 0
+                                                         children [
+                                                            HingeJoint {
+                                                               jointParameters HingeJointParameters {
+                                                                  axis   0 0 1
+                                                               }
+                                                               device [
+                                                               ]
+                                                               endPoint Solid {
+                                                                  children [
+                                                                     Transform {
+                                                                        translation 0 0 %{=wrist_1_length}%
+                                                                        children [
+                                                                           HingeJoint {
+                                                                              jointParameters HingeJointParameters {
+                                                                                 axis   0 1 0
+                                                                              }
+                                                                              device [
+                                                                              ]
+                                                                              endPoint Solid {
+                                                                                 children [
+                                                                                    Transform {
+                                                                                       translation 0 %{=wrist_2_length}% 0
+                                                                                       children [
+                                                                                          HingeJoint {
+                                                                                             jointParameters HingeJointParameters {
+                                                                                                axis   0 0 1
+                                                                                             }
+                                                                                             device [
+                                                                                             ]
+                                                                                             endPoint Solid {
+                                                                                                children [
+                                                                                                   # slot goes here
+                                                                                                ]
+                                                                                                name "ur10_wrist_3"
+                                                                                                boundingObject UR10Wrist3Collision { }
+                                                                                                physics Physics {
+                                                                                                   density -1
+                                                                                                   mass %{=wrist_3_mass}%
+                                                                                                }
+                                                                                             }
+                                                                                          }
+                                                                                       ]
+                                                                                    }
+                                                                                 ]
+                                                                                 name "ur10_wrist_2"
+                                                                                 boundingObject UR10Wrist2Collision { }
+                                                                                 physics Physics {
+                                                                                    density -1
+                                                                                    mass %{=wrist_2_mass}%
+                                                                                 }
+                                                                              }
+                                                                           }
+                                                                        ]
+                                                                     }
+                                                                  ]
+                                                                  name "ur10_wrist_1"
+                                                                  boundingObject UR10Wrist1Collision { }
+                                                                  physics Physics {
+                                                                     density -1
+                                                                     mass %{=wrist_1_mass}%
+                                                                  }
+                                                               }
+                                                            }
+                                                         ]
+                                                      }
+                                                   ]
+                                                   name "ur10_forearm"
+                                                   boundingObject UR10ForeArmCollision { }
+                                                   physics Physics {
+                                                      density -1
+                                                      mass %{=forearm_mass}%
+                                                   }
+                                                }
+                                             }
+                                          ]
+                                       }
+                                    ]
+                                    name "ur10_upper_arm"
+                                    boundingObject UR10UpperArmCollision { }
+                                    physics Physics {
+                                       density -1
+                                       mass %{=upper_arm_mass}%
+                                    }
+                                 }
+                              }
+                           ]
+                        }
+                     ]
+                     name "ur10_shoulder"
+                     boundingObject UR10ShoulderCollision { }
+                     physics Physics {
+                        density -1
+                        mass %{=shoulder_mass}%
+                     }
+                  }
+               }
+            ]
+         }
+      ]
+      name "ur10_base"
+      boundingObject UR10BaseCollision { }
+      physics Physics {
+         density -1
+         mass %{=base_mass}%
+      }
+   }
+}
