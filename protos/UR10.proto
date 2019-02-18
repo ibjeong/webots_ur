@@ -42,72 +42,79 @@ PROTO UR10 [
    }%
    Solid {
       children [
+         UR10BaseShape { }
          Transform {
             translation 0 %{=shoulder_height}% 0
             children [
                HingeJoint {
                   jointParameters HingeJointParameters {
-                     axis   0 1 0
+                     axis 0 1 0
                   }
                   device [
                   ]
                   endPoint Solid {
                      children [
+                        UR10ShoulderShape { }
                         Transform {
                            translation 0 0 %{=shoulder_offset}%
                            children [
                               HingeJoint {
                                  jointParameters HingeJointParameters {
-                                    axis   0 0 1
+                                    axis 0 0 1
                                  }
                                  device [
                                  ]
                                  endPoint Solid {
                                     children [
+                                       UR10UpperArmShape { }
                                        Transform {
                                           translation 0 %{=upper_arm_length}% %{=elbow_offset}%
                                           children [
                                              HingeJoint {
                                                 jointParameters HingeJointParameters {
-                                                   axis   0 0 1
+                                                   axis 0 0 1
                                                 }
                                                 device [
                                                 ]
                                                 endPoint Solid {
                                                    children [
+                                                      UR10ForeArmShape { }
                                                       Transform {
                                                          translation 0 %{=forearm_length}% 0
                                                          children [
                                                             HingeJoint {
                                                                jointParameters HingeJointParameters {
-                                                                  axis   0 0 1
+                                                                  axis 0 0 1
                                                                }
                                                                device [
                                                                ]
                                                                endPoint Solid {
                                                                   children [
+                                                                     UR10Wrist1Shape { }
                                                                      Transform {
                                                                         translation 0 0 %{=wrist_1_length}%
                                                                         children [
                                                                            HingeJoint {
                                                                               jointParameters HingeJointParameters {
-                                                                                 axis   0 1 0
+                                                                                 axis 0 1 0
                                                                               }
                                                                               device [
                                                                               ]
                                                                               endPoint Solid {
                                                                                  children [
+                                                                                    UR10Wrist2Shape { }
                                                                                     Transform {
                                                                                        translation 0 %{=wrist_2_length}% 0
                                                                                        children [
                                                                                           HingeJoint {
                                                                                              jointParameters HingeJointParameters {
-                                                                                                axis   0 0 1
+                                                                                                axis 0 0 1
                                                                                              }
                                                                                              device [
                                                                                              ]
                                                                                              endPoint Solid {
                                                                                                 children [
+                                                                                                   UR10Wrist3Shape { }
                                                                                                    # slot goes here
                                                                                                 ]
                                                                                                 name "ur10_wrist_3"
