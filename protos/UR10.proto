@@ -1,6 +1,22 @@
 #VRML_SIM R2019a utf8
 
 PROTO UR10 [
+ field SFVec3f    translation 0 0 0
+ field SFRotation rotation    0 1 0 0
+ field SFVec3f    scale       1 1 1
+ # children
+ field SFString   name              "ur10"        # any string
+ field SFString   model             ""            # any string
+ field SFString   description       ""            # any string
+ # contactMaterial "default"
+ # immersionProperties
+ # boundingObject NULL
+ # physics NULL
+ field SFBool     locked            FALSE         # {TRUE, FALSE}
+ field SFFloat    radarCrossSection 0.0           # [0, 1]
+ # recognitionColors
+ field SFFloat    translationStep   0.01          # [0, inf)
+ field SFFloat    rotationStep      0.261799387   # [0, inf)
 ]
 {
    %{
@@ -41,6 +57,9 @@ PROTO UR10 [
       local wrist_3_length   = d6
    }%
    Solid {
+      translation IS translation
+      rotation    IS rotation
+      scale       IS scale
       children [
          UR10BaseShape { }
          Transform {
@@ -183,11 +202,17 @@ PROTO UR10 [
             ]
          }
       ]
-      name "ur10_base"
+      name        IS name
+      model       IS model
+      description IS description
       boundingObject UR10BaseCollision { }
       physics Physics {
          density -1
          mass %{=base_mass}%
       }
+      locked            IS locked
+      radarCrossSection IS radarCrossSection
+      translationStep   IS translationStep
+      rotationStep      IS rotationStep
    }
 }

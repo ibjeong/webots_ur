@@ -3,7 +3,7 @@ WorldInfo {
 }
 Viewpoint {
   orientation -0.16871731871654694 -0.9625686053895409 -0.2121229508646659 1.888300571694746
-  position -2.723260358653187 1.91283337472329 -0.47281856356402757
+  position -2.683212624628033 1.8223479061966599 -0.7631105905882286
 }
 Background {
   cubemap Cubemap {
@@ -19,4 +19,9 @@ DirectionalLight {
 RectangleArena {
 }
 UR10 {
+  name "ur10_1"
+}
+UR10 {
+  translation 0 0 -0.4
+  name "ur10_2"
 }
