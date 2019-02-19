@@ -1,5 +1,9 @@
 #VRML_SIM R2019a utf8
 WorldInfo {
+  basicTimeStep 20
+  optimalThreadCount 4
+  defaultDamping Damping {
+  }
 }
 Viewpoint {
   orientation -0.16871731871654694 -0.9625686053895409 -0.2121229508646659 1.888300571694746
