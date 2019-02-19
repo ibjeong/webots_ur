@@ -5,18 +5,38 @@ PROTO UR10 [
  field SFRotation rotation    0 1 0 0
  field SFVec3f    scale       1 1 1
  # children
- field SFString   name              "ur10"        # any string
- field SFString   model             ""            # any string
- field SFString   description       ""            # any string
- # contactMaterial "default"
- # immersionProperties
+ field SFString   name                "ur10"      # any string
+ field SFString   model               ""          # any string
+ field SFString   description         ""          # any string
+ field SFString   contactMaterial     "default"   # any string
+ # field MFNode     immersionProperties [ ]         # {ImmersionProperties, PROTO}
  # boundingObject NULL
  # physics NULL
- field SFBool     locked            FALSE         # {TRUE, FALSE}
- field SFFloat    radarCrossSection 0.0           # [0, 1]
- # recognitionColors
- field SFFloat    translationStep   0.01          # [0, inf)
- field SFFloat    rotationStep      0.261799387   # [0, inf)
+ field SFBool     locked              FALSE       # {TRUE, FALSE}
+ # field SFFloat    radarCrossSection   0.0         # [0, 1]
+ # field MFColor    recognitionColors   [ ]         # any color
+ field SFFloat    translationStep     0.01        # [0, inf)
+ field SFFloat    rotationStep        0.261799387 # [0, inf)
+
+ field SFString shoulder_pan_motor_name  "shoulder_pan_joint"
+ field SFString shoulder_lift_motor_name "shoulder_lift_joint"
+ field SFString elbow_motor_name         "elbow_joint"
+ field SFString wrist_1_motor_name       "wrist_1_joint"
+ field SFString wrist_2_motor_name       "wrist_2_joint"
+ field SFString wrist_3_motor_name       "wrist_3_joint"
+
+ field SFFloat shoulder_pan_lower_limit  -3.14159265359 # [-pi, pi]
+ field SFFloat shoulder_pan_upper_limit   3.14159265359 # [-pi, pi]
+ field SFFloat shoulder_lift_lower_limit -3.14159265359 # [-pi, pi]
+ field SFFloat shoulder_lift_upper_limit  3.14159265359 # [-pi, pi]
+ field SFFloat elbow_lower_limit         -3.14159265359 # [-pi, pi]
+ field SFFloat elbow_upper_limit          3.14159265359 # [-pi, pi]
+ field SFFloat wrist_1_lower_limit       -3.14159265359 # [-pi, pi]
+ field SFFloat wrist_1_upper_limit        3.14159265359 # [-pi, pi]
+ field SFFloat wrist_2_lower_limit       -3.14159265359 # [-pi, pi]
+ field SFFloat wrist_2_upper_limit        3.14159265359 # [-pi, pi]
+ field SFFloat wrist_3_lower_limit       -3.14159265359 # [-pi, pi]
+ field SFFloat wrist_3_upper_limit        3.14159265359 # [-pi, pi]
 ]
 {
    %{
@@ -66,6 +86,13 @@ PROTO UR10 [
                      axis 0 1 0
                   }
                   device [
+                   RotationalMotor {
+                      name        IS shoulder_pan_motor_name
+                      maxVelocity 2.16
+                      minPosition IS shoulder_pan_lower_limit
+                      maxPosition IS shoulder_pan_upper_limit
+                      maxTorque   330.0
+                   }
                   ]
                   endPoint Solid {
                      children [
@@ -78,6 +105,13 @@ PROTO UR10 [
                                     axis 0 0 1
                                  }
                                  device [
+                                  RotationalMotor {
+                                     name        IS shoulder_lift_motor_name
+                                     maxVelocity 2.16
+                                     minPosition IS shoulder_lift_lower_limit
+                                     maxPosition IS shoulder_lift_upper_limit
+                                     maxTorque   330.0
+                                  }
                                  ]
                                  endPoint Solid {
                                     children [
@@ -90,6 +124,13 @@ PROTO UR10 [
                                                    axis 0 0 1
                                                 }
                                                 device [
+                                                 RotationalMotor {
+                                                    name        IS elbow_motor_name
+                                                    maxVelocity 3.15
+                                                    minPosition IS elbow_lower_limit
+                                                    maxPosition IS elbow_upper_limit
+                                                    maxTorque   150.0
+                                                 }
                                                 ]
                                                 endPoint Solid {
                                                    children [
@@ -102,6 +143,13 @@ PROTO UR10 [
                                                                   axis 0 0 1
                                                                }
                                                                device [
+                                                                RotationalMotor {
+                                                                   name        IS wrist_1_motor_name
+                                                                   maxVelocity 3.2
+                                                                   minPosition IS wrist_1_lower_limit
+                                                                   maxPosition IS wrist_1_upper_limit
+                                                                   maxTorque   54.0
+                                                                }
                                                                ]
                                                                endPoint Solid {
                                                                   children [
@@ -114,6 +162,13 @@ PROTO UR10 [
                                                                                  axis 0 1 0
                                                                               }
                                                                               device [
+                                                                               RotationalMotor {
+                                                                                  name        IS wrist_2_motor_name
+                                                                                  maxVelocity 3.2
+                                                                                  minPosition IS wrist_2_lower_limit
+                                                                                  maxPosition IS wrist_2_upper_limit
+                                                                                  maxTorque   54.0
+                                                                               }
                                                                               ]
                                                                               endPoint Solid {
                                                                                  children [
@@ -126,6 +181,13 @@ PROTO UR10 [
                                                                                                 axis 0 0 1
                                                                                              }
                                                                                              device [
+                                                                                              RotationalMotor {
+                                                                                                 name        IS wrist_3_motor_name
+                                                                                                 maxVelocity 3.2
+                                                                                                 minPosition IS wrist_3_lower_limit
+                                                                                                 maxPosition IS wrist_3_upper_limit
+                                                                                                 maxTorque   54.0
+                                                                                              }
                                                                                              ]
                                                                                              endPoint Solid {
                                                                                                 children [
@@ -246,9 +308,11 @@ PROTO UR10 [
             ]
          }
       ]
-      name        IS name
-      model       IS model
-      description IS description
+      name                IS name
+      model               IS model
+      description         IS description
+      contactMaterial     IS contactMaterial
+      # immersionProperties IS immersionProperties
       boundingObject UR10BaseCollision { }
       physics Physics {
          %{ local m, r, l = base_mass, 0.075, 0.038 }%
@@ -263,7 +327,8 @@ PROTO UR10 [
          ]
       }
       locked            IS locked
-      radarCrossSection IS radarCrossSection
+      # radarCrossSection IS radarCrossSection
+      # recognitionColors IS recognitionColors
       translationStep   IS translationStep
       rotationStep      IS rotationStep
    }

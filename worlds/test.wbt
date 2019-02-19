@@ -6,8 +6,8 @@ WorldInfo {
   }
 }
 Viewpoint {
-  orientation -0.16871731871654694 -0.9625686053895409 -0.2121229508646659 1.888300571694746
-  position -2.683212624628033 1.8223479061966599 -0.7631105905882286
+  orientation -0.27848721943453514 -0.9413843860762678 -0.19036886894508123 1.3146373184033495
+  position -4.070883673720298 2.5426420955929516 1.5006150521754567
 }
 Background {
   cubemap Cubemap {
@@ -22,10 +22,17 @@ DirectionalLight {
 }
 RectangleArena {
 }
-UR10 {
-  name "ur10_1"
+Robot {
+  children [
+    UR10 {
+    }
+  ]
 }
-UR10 {
+Robot {
   translation 0 0 -0.4
-  name "ur10_2"
+  children [
+    UR10 {
+    }
+  ]
+  name "robot(1)"
 }
