@@ -55,6 +55,13 @@ PROTO UR10 [
       local wrist_1_length   = d4 - elbow_offset - shoulder_offset
       local wrist_2_length   = d5
       local wrist_3_length   = d6
+
+      local function ixx(m, r, l) return 1/12 * m * (3 * r^2 + l^2) end
+      local function iyy(m, r, l) return 1/12 * m * (3 * r^2 + l^2) end
+      local function izz(m, r, l) return 1/12 * m * r^2             end
+      local function ixy(m, r, l) return 0                      end
+      local function ixz(m, r, l) return 0                      end
+      local function iyz(m, r, l) return 0                      end
    }%
    Solid {
       translation IS translation
@@ -139,8 +146,16 @@ PROTO UR10 [
                                                                                                 name "ur10_wrist_3"
                                                                                                 boundingObject UR10Wrist3Collision { }
                                                                                                 physics Physics {
+                                                                                                   %{ local m, r, l = wrist_3_mass, 0.075, 0.12 }%
                                                                                                    density -1
-                                                                                                   mass %{=wrist_3_mass}%
+                                                                                                   mass %{=m}%
+                                                                                                   centerOfMass [
+                                                                                                    0 0 0
+                                                                                                   ]
+                                                                                                   inertiaMatrix [
+                                                                                                    %{=ixx(m, r, l)}% %{=iyy(m, r, l)}% %{=izz(m, r, l)}%
+                                                                                                    %{=ixy(m, r, l)}% %{=ixz(m, r, l)}% %{=iyz(m, r, l)}%
+                                                                                                   ]
                                                                                                 }
                                                                                              }
                                                                                           }
@@ -150,8 +165,16 @@ PROTO UR10 [
                                                                                  name "ur10_wrist_2"
                                                                                  boundingObject UR10Wrist2Collision { }
                                                                                  physics Physics {
+                                                                                    %{ local m, r, l = wrist_2_mass, 0.075, 0.12 }%
                                                                                     density -1
-                                                                                    mass %{=wrist_2_mass}%
+                                                                                    mass %{=m}%
+                                                                                    centerOfMass [
+                                                                                     0 0 0
+                                                                                    ]
+                                                                                    inertiaMatrix [
+                                                                                     %{=ixx(m, r, l)}% %{=iyy(m, r, l)}% %{=izz(m, r, l)}%
+                                                                                     %{=ixy(m, r, l)}% %{=ixz(m, r, l)}% %{=iyz(m, r, l)}%
+                                                                                    ]
                                                                                  }
                                                                               }
                                                                            }
@@ -161,8 +184,16 @@ PROTO UR10 [
                                                                   name "ur10_wrist_1"
                                                                   boundingObject UR10Wrist1Collision { }
                                                                   physics Physics {
+                                                                     %{ local m, r, l = wrist_1_mass, 0.075, 0.12 }%
                                                                      density -1
-                                                                     mass %{=wrist_1_mass}%
+                                                                     mass %{=m}%
+                                                                     centerOfMass [
+                                                                      0 0 0
+                                                                     ]
+                                                                     inertiaMatrix [
+                                                                      %{=ixx(m, r, l)}% %{=iyy(m, r, l)}% %{=izz(m, r, l)}%
+                                                                      %{=ixy(m, r, l)}% %{=ixz(m, r, l)}% %{=iyz(m, r, l)}%
+                                                                     ]
                                                                   }
                                                                }
                                                             }
@@ -172,8 +203,16 @@ PROTO UR10 [
                                                    name "ur10_forearm"
                                                    boundingObject UR10ForeArmCollision { }
                                                    physics Physics {
+                                                      %{ local m, r, l = forearm_mass, 0.075, -a3 }%
                                                       density -1
-                                                      mass %{=forearm_mass}%
+                                                      mass %{=m}%
+                                                      centerOfMass [
+                                                       0 %{=-a3/2}% 0
+                                                      ]
+                                                      inertiaMatrix [
+                                                       %{=ixx(m, r, l)}% %{=iyy(m, r, l)}% %{=izz(m, r, l)}%
+                                                       %{=ixy(m, r, l)}% %{=ixz(m, r, l)}% %{=iyz(m, r, l)}%
+                                                      ]
                                                    }
                                                 }
                                              }
@@ -183,8 +222,16 @@ PROTO UR10 [
                                     name "ur10_upper_arm"
                                     boundingObject UR10UpperArmCollision { }
                                     physics Physics {
+                                       %{ local m, r, l = upper_arm_mass, 0.075, -a2 }%
                                        density -1
-                                       mass %{=upper_arm_mass}%
+                                       mass %{=m}%
+                                       centerOfMass [
+                                        0 %{=-a2/2}% 0
+                                       ]
+                                       inertiaMatrix [
+                                        %{=ixx(m, r, l)}% %{=iyy(m, r, l)}% %{=izz(m, r, l)}%
+                                        %{=ixy(m, r, l)}% %{=ixz(m, r, l)}% %{=iyz(m, r, l)}%
+                                       ]
                                     }
                                  }
                               }
@@ -194,8 +241,16 @@ PROTO UR10 [
                      name "ur10_shoulder"
                      boundingObject UR10ShoulderCollision { }
                      physics Physics {
+                        %{ local m, r, l = shoulder_mass, 0.075, 0.178 }%
                         density -1
-                        mass %{=shoulder_mass}%
+                        mass %{=m}%
+                        centerOfMass [
+                         0 0 0
+                        ]
+                        inertiaMatrix [
+                         %{=ixx(m, r, l)}% %{=iyy(m, r, l)}% %{=izz(m, r, l)}%
+                         %{=ixy(m, r, l)}% %{=ixz(m, r, l)}% %{=iyz(m, r, l)}%
+                        ]
                      }
                   }
                }
@@ -207,8 +262,16 @@ PROTO UR10 [
       description IS description
       boundingObject UR10BaseCollision { }
       physics Physics {
+         %{ local m, r, l = base_mass, 0.075, 0.038 }%
          density -1
-         mass %{=base_mass}%
+         mass %{=m}%
+         centerOfMass [
+          0 0 0
+         ]
+         inertiaMatrix [
+          %{=ixx(m, r, l)}% %{=iyy(m, r, l)}% %{=izz(m, r, l)}%
+          %{=ixy(m, r, l)}% %{=ixz(m, r, l)}% %{=iyz(m, r, l)}%
+         ]
       }
       locked            IS locked
       radarCrossSection IS radarCrossSection
