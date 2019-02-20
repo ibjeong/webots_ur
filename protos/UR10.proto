@@ -18,25 +18,25 @@ PROTO UR10 [
  field SFFloat    translationStep     0.01        # [0, inf)
  field SFFloat    rotationStep        0.261799387 # [0, inf)
 
- field SFString shoulder_pan_motor_name  "shoulder_pan_joint"
- field SFString shoulder_lift_motor_name "shoulder_lift_joint"
- field SFString elbow_motor_name         "elbow_joint"
- field SFString wrist_1_motor_name       "wrist_1_joint"
- field SFString wrist_2_motor_name       "wrist_2_joint"
- field SFString wrist_3_motor_name       "wrist_3_joint"
+ field SFString shoulderPanMotorName  "shoulder_pan_joint"
+ field SFString shoulderLiftMotorName "shoulder_lift_joint"
+ field SFString elbowMotorName        "elbow_joint"
+ field SFString wrist1MotorName       "wrist_1_joint"
+ field SFString wrist2MotorName       "wrist_2_joint"
+ field SFString wrist3MotorName       "wrist_3_joint"
 
- field SFFloat shoulder_pan_lower_limit  -3.14159265359 # [-pi, pi]
- field SFFloat shoulder_pan_upper_limit   3.14159265359 # [-pi, pi]
- field SFFloat shoulder_lift_lower_limit -3.14159265359 # [-pi, pi]
- field SFFloat shoulder_lift_upper_limit  3.14159265359 # [-pi, pi]
- field SFFloat elbow_lower_limit         -3.14159265359 # [-pi, pi]
- field SFFloat elbow_upper_limit          3.14159265359 # [-pi, pi]
- field SFFloat wrist_1_lower_limit       -3.14159265359 # [-pi, pi]
- field SFFloat wrist_1_upper_limit        3.14159265359 # [-pi, pi]
- field SFFloat wrist_2_lower_limit       -3.14159265359 # [-pi, pi]
- field SFFloat wrist_2_upper_limit        3.14159265359 # [-pi, pi]
- field SFFloat wrist_3_lower_limit       -3.14159265359 # [-pi, pi]
- field SFFloat wrist_3_upper_limit        3.14159265359 # [-pi, pi]
+ field SFFloat shoulderPanLowerLimit  -3.14159265359 # [-pi, pi]
+ field SFFloat shoulderPanUpperLimit   3.14159265359 # [-pi, pi]
+ field SFFloat shoulderLiftLowerLimit -3.14159265359 # [-pi, pi]
+ field SFFloat shoulderLiftUpperLimit  3.14159265359 # [-pi, pi]
+ field SFFloat elbowLowerLimit        -3.14159265359 # [-pi, pi]
+ field SFFloat elbowUpperLimit         3.14159265359 # [-pi, pi]
+ field SFFloat wrist1LowerLimit       -3.14159265359 # [-pi, pi]
+ field SFFloat wrist1UpperLimit        3.14159265359 # [-pi, pi]
+ field SFFloat wrist2LowerLimit       -3.14159265359 # [-pi, pi]
+ field SFFloat wrist2UpperLimit        3.14159265359 # [-pi, pi]
+ field SFFloat wrist3LowerLimit       -3.14159265359 # [-pi, pi]
+ field SFFloat wrist3UpperLimit        3.14159265359 # [-pi, pi]
 ]
 {
    %{
@@ -87,10 +87,10 @@ PROTO UR10 [
                   }
                   device [
                    RotationalMotor {
-                      name        IS shoulder_pan_motor_name
+                      name        IS shoulderPanMotorName
                       maxVelocity 2.16
-                      minPosition IS shoulder_pan_lower_limit
-                      maxPosition IS shoulder_pan_upper_limit
+                      minPosition IS shoulderPanLowerLimit
+                      maxPosition IS shoulderPanUpperLimit
                       maxTorque   330.0
                    }
                   ]
@@ -106,10 +106,10 @@ PROTO UR10 [
                                  }
                                  device [
                                   RotationalMotor {
-                                     name        IS shoulder_lift_motor_name
+                                     name        IS shoulderLiftMotorName
                                      maxVelocity 2.16
-                                     minPosition IS shoulder_lift_lower_limit
-                                     maxPosition IS shoulder_lift_upper_limit
+                                     minPosition IS shoulderLiftLowerLimit
+                                     maxPosition IS shoulderLiftUpperLimit
                                      maxTorque   330.0
                                   }
                                  ]
@@ -125,10 +125,10 @@ PROTO UR10 [
                                                 }
                                                 device [
                                                  RotationalMotor {
-                                                    name        IS elbow_motor_name
+                                                    name        IS elbowMotorName
                                                     maxVelocity 3.15
-                                                    minPosition IS elbow_lower_limit
-                                                    maxPosition IS elbow_upper_limit
+                                                    minPosition IS elbowLowerLimit
+                                                    maxPosition IS elbowUpperLimit
                                                     maxTorque   150.0
                                                  }
                                                 ]
@@ -144,10 +144,10 @@ PROTO UR10 [
                                                                }
                                                                device [
                                                                 RotationalMotor {
-                                                                   name        IS wrist_1_motor_name
+                                                                   name        IS wrist1MotorName
                                                                    maxVelocity 3.2
-                                                                   minPosition IS wrist_1_lower_limit
-                                                                   maxPosition IS wrist_1_upper_limit
+                                                                   minPosition IS wrist1LowerLimit
+                                                                   maxPosition IS wrist1UpperLimit
                                                                    maxTorque   54.0
                                                                 }
                                                                ]
@@ -163,10 +163,10 @@ PROTO UR10 [
                                                                               }
                                                                               device [
                                                                                RotationalMotor {
-                                                                                  name        IS wrist_2_motor_name
+                                                                                  name        IS wrist2MotorName
                                                                                   maxVelocity 3.2
-                                                                                  minPosition IS wrist_2_lower_limit
-                                                                                  maxPosition IS wrist_2_upper_limit
+                                                                                  minPosition IS wrist2LowerLimit
+                                                                                  maxPosition IS wrist2UpperLimit
                                                                                   maxTorque   54.0
                                                                                }
                                                                               ]
@@ -182,10 +182,10 @@ PROTO UR10 [
                                                                                              }
                                                                                              device [
                                                                                               RotationalMotor {
-                                                                                                 name        IS wrist_3_motor_name
+                                                                                                 name        IS wrist3MotorName
                                                                                                  maxVelocity 3.2
-                                                                                                 minPosition IS wrist_3_lower_limit
-                                                                                                 maxPosition IS wrist_3_upper_limit
+                                                                                                 minPosition IS wrist3LowerLimit
+                                                                                                 maxPosition IS wrist3UpperLimit
                                                                                                  maxTorque   54.0
                                                                                               }
                                                                                              ]
