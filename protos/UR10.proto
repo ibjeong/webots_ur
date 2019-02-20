@@ -37,6 +37,8 @@ PROTO UR10 [
  field SFFloat wrist2UpperLimit        3.14159265359 # [-pi, pi]
  field SFFloat wrist3LowerLimit       -3.14159265359 # [-pi, pi]
  field SFFloat wrist3UpperLimit        3.14159265359 # [-pi, pi]
+
+ field MFNode gripperSlot [ ]
 ]
 {
    %{
@@ -192,7 +194,10 @@ PROTO UR10 [
                                                                                              endPoint Solid {
                                                                                                 children [
                                                                                                    UR10Wrist3Shape { }
-                                                                                                   # slot goes here
+                                                                                                   Transform {
+                                                                                                      translation 0 0 %{=wrist_3_length}%
+                                                                                                      children IS gripperSlot
+                                                                                                   }
                                                                                                 ]
                                                                                                 name "ur10_wrist_3"
                                                                                                 boundingObject UR10Wrist3Collision { }
